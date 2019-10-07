@@ -40,8 +40,8 @@ jobs:
         docker_layer_caching: false
       - run: docker build . -t vlingo/vlingo-schemata
       - run: |
-        echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-        docker push vlingo/vlingo-schemata
+          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+          docker push vlingo/vlingo-schemata
 workflows:
   version: 2
   default-workflow:
