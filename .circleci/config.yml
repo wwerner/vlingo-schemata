@@ -33,15 +33,15 @@ jobs:
   image:
     docker:
       - image: circleci/openjdk:8u151-jdk
-      steps:
-        - attach_workspace:
-            at: ~/project
-        - setup_remote_docker:
-          docker_layer_caching: false
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - setup_remote_docker:
+        docker_layer_caching: false
       - run: docker build . -t vlingo/vlingo-schemata
       - run: |
-          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-          docker push vlingo/vlingo-schemata
+        echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+        docker push vlingo/vlingo-schemata
 workflows:
   version: 2
   default-workflow:
