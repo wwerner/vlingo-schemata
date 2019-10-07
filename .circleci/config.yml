@@ -34,8 +34,7 @@ jobs:
     docker:
       - image: circleci/openjdk:8u151-jdk
     steps:
-      - attach_workspace:
-          at: ~/project
+      - checkout
       - setup_remote_docker:
           docker_layer_caching: false
       - run: docker build . -t vlingo/vlingo-schemata
