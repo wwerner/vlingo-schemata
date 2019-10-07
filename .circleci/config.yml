@@ -45,7 +45,8 @@ workflows:
     jobs:
       - build
       - image
-          requires: build
+          requires:
+            - build
           filters:
             branches:
               only:
