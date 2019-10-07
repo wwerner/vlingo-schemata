@@ -47,7 +47,7 @@ workflows:
   default-workflow:
     jobs:
       - build
-      - image
+      - image:
           requires:
             - build
           filters:
