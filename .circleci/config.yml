@@ -37,7 +37,7 @@ jobs:
       - attach_workspace:
           at: ~/project
       - setup_remote_docker:
-        docker_layer_caching: false
+          docker_layer_caching: false
       - run: docker build . -t vlingo/vlingo-schemata
       - run: |
           echo "$DOCKER_TOKEN" | docker login --username $DOCKER_USER --password-stdin
