@@ -50,7 +50,7 @@ jobs:
           destination: videos
       - store_artifacts:
           path: src/test/e2e/cypress/screenshots
-            destination: screenshots
+          destination: screenshots
       - run: |
           echo "$DOCKER_TOKEN" | docker login --username $DOCKER_USER --password-stdin
           docker push vlingo/vlingo-schemata
