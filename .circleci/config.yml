@@ -32,7 +32,7 @@ jobs:
           key: v2-mvn-dependencies-{{ checksum "pom.xml" }}
   image:
     docker:
-      - image: circleci/openjdk:8u151-jdk
+      - image: circleci/node:11-browsers
     steps:
       - checkout
       - setup_remote_docker:
