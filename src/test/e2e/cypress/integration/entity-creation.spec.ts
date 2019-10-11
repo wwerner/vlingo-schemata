@@ -12,53 +12,6 @@ describe('Entity Creation Tests', function () {
         cy.viewport(1280, 960)
     });
 
-    it('can create schema version', function () {
-        let orgName = faker.company.companyName()
-        let unitName = faker.lorem.word()
-        let namespace = faker.internet.domainName()
-        let schema = faker.company.catchPhraseNoun()
-        let majorMinorVersion = faker.random.number(9) + '.' + faker.random.number(9)
-        let patchVersion = faker.random.number(9)
-        let prevVersion = majorMinorVersion + '.' + patchVersion
-        let currentVersion = majorMinorVersion + '.' + (patchVersion + 1)
-
-        cy.visit('/#/organization')
-        cy.fillField('Name', orgName)
-        cy.fillField('Description', 'foo')
-        cy.contains('button', 'Create').click()
-
-        cy.visit('/#/unit')
-        cy.fillField('Name', unitName)
-        cy.fillField('Description', 'foo')
-        cy.contains('button', 'Create').click()
-
-        cy.visit('/#/context')
-        cy.fillField('Namespace', namespace)
-        cy.fillField('Description', 'foo')
-        cy.contains('button', 'Create').click()
-
-        cy.visit('/#/schema')
-        cy.fieldContent('SchemaID').should('be.empty')
-        cy.fillField('Name', schema)
-        cy.selectOption('Category', faker.random.arrayElement(['Command', 'Data', 'Document', 'Envelope', 'Event', 'Unknown']))
-        cy.selectOption('Scope', faker.random.arrayElement(['Public', 'Private']))
-        cy.fillField('Description', faker.lorem.sentence())
-        cy.contains('button', 'Create').click()
-        cy.fieldContent('SchemaID').should('not.be.empty')
-
-        cy.visit('/#/schemaVersion')
-        cy.fieldContent('SchemaVersionID').should('be.empty')
-        cy.fillField('Previous Version', prevVersion)
-        cy.fillField('Current Version', currentVersion)
-        cy.selectOption('Status', faker.random.arrayElement(['Draft', 'Published', 'Deprecated', 'Removed']))
-        cy.fillEditor('#description-editor', faker.lorem.sentence())
-        cy.fillEditor('#specification-editor', 'event SalutationHappened {\n' +
-            '    type eventType')
-        cy.wait(250).contains('button', 'Create').click({force: true})
-
-        cy.wait(250).fieldContent('SchemaVersionID').should('not.be.empty')
-    });
-
     it('can create organization', function () {
         let orgName = faker.company.companyName()
         cy.visit('/#/organization')
@@ -184,9 +137,9 @@ describe('Entity Creation Tests', function () {
         cy.fillEditor('#description-editor', faker.lorem.sentence())
         cy.fillEditor('#specification-editor', 'event SalutationHappened {\n' +
             '    type eventType')
-        cy.wait(250).contains('button', 'Create').click({force: true})
+        cy.contains('button', 'Create').click()
 
-        cy.wait(250).fieldContent('SchemaVersionID').should('not.be.empty')
+        cy.fieldContent('SchemaVersionID').should('not.be.empty')
     });
 
 });
