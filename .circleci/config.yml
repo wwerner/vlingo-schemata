@@ -29,7 +29,7 @@ jobs:
       - attach_workspace:
           at: ~/project
       - run: |
-          java -jar ~/project/target/vlingo-schemata-*-jar-with-dependencies.jar dev
+          java -jar ~/project/target/vlingo-schemata-*-jar-with-dependencies.jar dev &
           export CYPRESS_BASE_URL=http://localhost:9019/app
           cd src/test/e2e
           npm install
