@@ -31,7 +31,7 @@ jobs:
       - run: |
           java -jar ~/project/target/vlingo-schemata-*-jar-with-dependencies.jar dev &
           export CYPRESS_BASE_URL=http://localhost:9019/app
-          cd src/test/e2e
+          cd ~/project/src/test/e2e
           npm install
           npm run test-multiple
       - store_test_results:
