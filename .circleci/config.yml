@@ -22,16 +22,14 @@ jobs:
             - target/node
             - src/main/frontend/node_modules
           key: v1-dependencies-{{ checksum "src/main/frontend/package.json" }}
-  image:
+  e2e-test:
     docker:
-      - image: circleci/node:11-browsers
+      - image: circleci/jdk:8-node-browsers
     steps:
-      - checkout
-      - setup_remote_docker:
-          docker_layer_caching: false
+      - attach_workspace:
+          at: ~/project
       - run: |
-          docker build . -t vlingo/vlingo-schemata
-          docker run -d -p9019:9019 vlingo/vlingo-schemata
+          java -jar ~/project/target/vlingo-schemata-*-jar-with-dependencies.jar dev
           export CYPRESS_BASE_URL=http://localhost:9019/app
           cd src/test/e2e
           npm install
@@ -44,6 +42,15 @@ jobs:
       - store_artifacts:
           path: src/test/e2e/cypress/screenshots
           destination: screenshots
+  image:
+    docker:
+      - image: circleci/jdk:8
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: false
+      - run: |
+          docker build . -t vlingo/vlingo-schemata
       - run: |
           echo "$DOCKER_TOKEN" | docker login --username $DOCKER_USER --password-stdin
           docker push vlingo/vlingo-schemata
@@ -52,9 +59,12 @@ workflows:
   default-workflow:
     jobs:
       - build
-      - image:
+      - e2e-test:
           requires:
             - build
+      - image:
+          requires:
+            - e2e-test
           filters:
             branches:
               only:
