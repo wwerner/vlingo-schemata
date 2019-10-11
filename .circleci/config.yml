@@ -15,6 +15,7 @@ jobs:
           paths:
             - target/
             - src/main/frontend/
+            - src/test/e2e/
       - store_test_results:
           path: target/surefire-reports
       - save_cache:
