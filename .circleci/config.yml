@@ -37,7 +37,20 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: false
-      - run: docker build . -t vlingo/vlingo-schemata
+      - run: |
+          docker build . -t vlingo/vlingo-schemata
+          docker run -d -p9019:9019 vlingo/vlingo-schemata
+          export CYPRESS_BASE_URL=http://localhost:9019/app
+          cd src/test/e2e
+          npm run test-multiple
+      - store_test_results:
+          path: src/test/e2e/multiple-results
+      - store_artifacts:
+          path: src/test/e2e/cypress/videos
+          destination: videos
+      - store_artifacts:
+          path: src/test/e2e/cypress/screenshots
+            destination: screenshots
       - run: |
           echo "$DOCKER_TOKEN" | docker login --username $DOCKER_USER --password-stdin
           docker push vlingo/vlingo-schemata
