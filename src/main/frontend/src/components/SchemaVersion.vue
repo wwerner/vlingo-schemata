@@ -109,7 +109,7 @@
                                 @change="activateSpecificationEditor"
                                 theme="vs-dark"
                                 language="javascript"
-                                height="500"
+                                height="350"
                                 :options="editorOptions"
                         ></editor>
 
@@ -170,23 +170,7 @@
                 'version'
             ]),
         },
-        watch: {
-            description() {
-                this.schemaVersionId = ''
-            },
-            specification() {
-                this.schemaVersionId = ''
-            },
-            status() {
-                this.schemaVersionId = ''
-            },
-            previousVersion() {
-                this.schemaVersionId = ''
-            },
-            currentVersion() {
-                this.schemaVersionId = ''
-            }
-        },
+        watch: {},
 
         asyncComputed: {
             async organizations() {
