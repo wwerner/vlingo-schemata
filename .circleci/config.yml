@@ -24,7 +24,7 @@ jobs:
           key: v1-dependencies-{{ checksum "src/main/frontend/package.json" }}
   e2e-test:
     docker:
-      - image: circleci/jdk:8-node-browsers
+      - image: circleci/openjdk:8-jdk-node-browsers
     steps:
       - attach_workspace:
           at: ~/project
